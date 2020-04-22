@@ -1,0 +1,54 @@
+#navBar {
+    display:flex;
+    justify-content: center;
+    height:8vh;
+}
+#LogoContent {
+    background-image: url('PortFolioLogo.png'); /*https://www.youtube.com/watch?v=mvSu0ja6fDs*/
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: bottom;
+    background-color:#d5d9dd;
+    height:28vh;
+}
+.PageHeaders {
+    background-color:#343A40;
+    color:#9A9DA0;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+.PageContents {
+    background-color:#d5d9dd;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#MainContainer {
+    height:65vh;
+}
+#Main {
+    margin:auto;
+    margin-top:20px;
+    width:97%;
+}
+#RightContainer {
+    height:65vh;
+}
+#TopRight {
+    margin:auto;
+    margin-top:20px;
+    width:97%;
+}
+#BottomRight {
+    margin:auto;
+    margin-top:20px;
+    width:97%;
+}
+#FooterContainer {
+    background-color:#343A40;
+    position: fixed;
+    bottom: 0;
+    color:#9A9DA0;
+    text-align:center;
+    padding-top:1vh;
+    padding-bottom:1vh;
+}

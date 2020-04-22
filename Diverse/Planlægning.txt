@@ -1,0 +1,78 @@
+Portfolio arbejdsplan:
+
+1 Genopfriskning af basis koncepter (w3schools og alpacanet)
+2 Planlægning af indhold (Hvad skal siden faktisk indeholde?)
+3 Planlægning af database (analyser behov for permanent data samt udvikling af E/R)
+4 Planlægning af system design (hvordan skal business logic struktureres og håndtere kommunikation mellem frontend og backend)
+5 Planlægning af hjemmeside  design (Hvordan skal indhold vises for brugeren?)
+6 påbegyndelse af udvikling --> database --> klasser/business logic --> frontend
+
+2. Hvad skal siden indeholde:
+	1. Der skal være en forside der introducere. 
+	2. Der skal være en Om side
+	3. Der skal være en side for at oprette bruger med henblik på at logge ind for at få mulighed for at downloade projekter
+	4. Der skal være en login side. Denne side skal indeholde en liste over projekter der kan downloades.
+	5. Der skal være en side hvor brugeren kan redigere sin profil.
+	6. Der skal laves en kontaktform for folk der er logget ind. 
+
+3. Hvad skal databasen registrere?
+	1. Der skal registreres en bruger (brugernavn, password, fornavn, efternavn, email, evt hjemmeside?, kommentar).
+	2. Der skal registreres beskeder skrevet af brugeren. 
+	3. Der skal registreres Hvilke downloads brugeren har foretaget på siden. (projekt og dato for download).
+	4. Der skal registreres hvornår brugeren har logget ind. (eventuelt hvornår brugeren har logget ud?)
+
+4. Hvordan skal systemet designes?
+	analyse:
+	Systemet forsøges designes med object relational model metoden, da det kunne være interessant at lave sådan
+	et system i en php kontekst. Dvs for hver tabel i databasen, laves en klasse med properties svarende
+	til tabellens attributter. Klassen skal kunne read/write/update på tabellen den ligger i forlængelse af.
+	Der skal lave en forbindelsesklasse af en art som orm klasserne anvender (meget lig "den lille orm" projektet).
+	Forbindelsen der skal anvendes i forbindelse med en form sættes ind fra frontend og bliver registreret 
+	i klassen der skal anvende den, og klassen sender den så videre til forbindelsesklassen.
+
+5. Bud på design opsætning: Brug gamechanger projekt og gummistøvlenet som inspiration
+	* Fixed top menu 
+	* Logo (et eller andet grafik med skriften "portfolio").
+	* Eventuelle thumbnails?
+        * 3 bokse i et main content --> En primær til venstre, 2 til højre.
+	* Til slut en footer.
+
+CREATE TABLE Beskeder (
+    Id int NOT NULL AUTO_INCREMENT,
+    Bruger int NOT NULL,
+    Emne varchar(50) NOT NULL,
+    Besked varchar(255) NOT NULL,
+    Tid DATETIME NOT NULL,
+    PRIMARY KEY (Id)
+);
+CREATE TABLE Login (
+    Brugernavn varchar(50) NOT NULL,
+    Kodeord varchar(50) NOT NULL,
+    PRIMARY KEY (Brugernavn)
+);
+CREATE TABLE Profil (
+    Id int NOT NULL AUTO_INCREMENT,
+    Fornavn varchar(50) NOT NULL,
+    Efternavn varchar(50),
+    Email varchar(50) NOT NULL,
+    Hjemmeside varchar(50),
+    profil varchar(255),
+    PRIMARY KEY (Id)
+);
+CREATE TABLE Projekter (
+    Navn varchar(50) NOT NULL,
+    PRIMARY KEY (Navn)
+);
+CREATE TABLE Downloads (
+    Id int NOT NULL AUTO_INCREMENT,
+    Bruger int NOT NULL,
+    Projekt varchar(50) NOT NULL,
+    Tid DATETIME NOT NULL,
+    PRIMARY KEY (Id)
+);
+CREATE TABLE Bruger (
+    Id int NOT NULL AUTO_INCREMENT,
+    Profil int NOT NULL,
+    Brugernavn varchar(50) NOT NULL,
+    PRIMARY KEY (Id)
+);
