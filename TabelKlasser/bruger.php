@@ -20,7 +20,7 @@ class bruger {
     public function setProfil($Profil){$this->Profil = $Profil;}
     public function getProfil() {return $this->Profil;}
     public function setBrugernavn($Brugernavn){$this->Brugernavn = $Brugernavn;}
-    public function getBrugernavn() {return $this->Brugernavn;}
+    public function getBrugernavn(){return $this->Brugernavn;}
     public function insert() 
     {
         $sql = "INSERT INTO bruger (Profil, Brugernavn) VALUES ('".$this->Profil."', '".$this->Brugernavn."')";

@@ -3,6 +3,17 @@
     justify-content: center;
     height:8vh;
 }
+.menuBtns {
+    width:100px;
+    font-weight:bold;
+    background-color: #6C757D; 
+    padding-top:2px;
+    padding-bottom:2px;
+    border: none;
+}
+.menuBtns:hover {
+    background-color: #5A6268;
+}
 #LogoContent {
     background-image: url('PortFolioLogo.png'); /*https://www.youtube.com/watch?v=mvSu0ja6fDs*/
     background-repeat: no-repeat;
@@ -12,6 +23,8 @@
     height:28vh;
 }
 .PageHeaders {
+    text-align:center;
+    font-weight:bold;
     background-color:#343A40;
     color:#9A9DA0;
     padding-top:5px;
@@ -28,7 +41,7 @@
 #Main {
     margin:auto;
     margin-top:20px;
-    width:97%;
+    width:98%;
 }
 #RightContainer {
     height:65vh;
@@ -36,19 +49,52 @@
 #TopRight {
     margin:auto;
     margin-top:20px;
-    width:97%;
+    width:100%;
 }
 #BottomRight {
     margin:auto;
     margin-top:20px;
-    width:97%;
+    width:100%;
 }
-#FooterContainer {
-    background-color:#343A40;
-    position: fixed;
-    bottom: 0;
+#Footer {
     color:#9A9DA0;
-    text-align:center;
-    padding-top:1vh;
-    padding-bottom:1vh;
+    font-weight:bold;
+    display:flex;
+    justify-content: center;
+    height:5vh;
+}
+#opretBrugerContent {
+    width:80%;
+    margin:auto;
+    padding-left:26%;
+}
+.opretFormInputs {
+    margin-top:10px;
+    width:50%;
+}
+.redigerFormInputs {
+    margin-top:10px;
+    width:50%;
+}
+.kontaktFormInputs {
+    margin-top:10px;
+    width:50%;
+}
+#opretSubmit {
+    width:50%;
+}
+#redigerSubmit {
+    width:50%;
+}
+.error {
+    color: #FF0000;
+}
+#loginContent {
+    width:100%;
+}
+.loginFormInputs {
+    width:100%;
+}
+#loginBtn {
+    width:50%;
 }

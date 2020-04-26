@@ -14,7 +14,7 @@ StartEventValidering();
         <div class="row">
             <div class="col-sm-12">
                 <?php
-                include("menu.php");
+                Menu();
                 ?>
             </div>
         </div>
@@ -24,7 +24,7 @@ StartEventValidering();
             </div>
         </div>
         <div class="row">
-            <div id="MainContainer" class="col-sm-8">
+            <div id="MainContainer" class="col-sm-9">
                 <div id="Main" class="row">
                     <div class="col-sm-12">
                         <div class="PageHeaders" class="row">
@@ -44,7 +44,7 @@ StartEventValidering();
                     </div>
                 </div>
             </div>
-            <div id="RightContainer" class="col-sm-4">
+            <div id="RightContainer" class="col-sm-3">
                 <div id="TopRight" class="row">
                     <div class="col-sm-12">
                         <div class="PageHeaders" class="row">
@@ -85,7 +85,9 @@ StartEventValidering();
         </div>
         <div class="row">
             <div id="FooterContainer" class="col-sm-12">
-                copyright &copy; portfolio
+                <nav id="Footer" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+                    Copryright &copy; portfolio
+                </nav>
             </div>
         </div>
     </body>
@@ -93,6 +95,7 @@ StartEventValidering();
 <?php 
 function StartEventValidering() 
 {
+    
     if(isset($_POST["loginBtn"]))
     {
         include("FunktionKlasser/LoginBruger.php");
@@ -107,19 +110,56 @@ function StartEventValidering()
         header("Location: index.php");
     }
     
-    if(isset($_POST["downloadBirger"]))
-    {
-        include("FunktionKlasser/Download.php");
-        $download = new Download();
-        $download->DownloadFil("Projekter/BirgerBolcherV2.zip");
-    }
-    
-    if(isset($_POST["kontaktsubmit"]))
+    if(isset($_POST["kontaktsubmit"]) && isset($_SESSION["LoggedInBruger"]))
     {
         include("FunktionKlasser/Kontakt.php");
         $kontakt = new Kontakt(mysqli_connect("localhost", "root", "", "portfoliodb"), $_SESSION["LoggedInBruger"], $_POST["kontaktemne"], $_POST["kontaktbesked"]);
         $kontakt->IndsaetBesked();
     }
+    
+    Downloads();
+}
+function Downloads() 
+{
+    $downloadSet = false;
+    $projektSti = "";
+    $projektStier = array("Projekter/BirgerBolcherV2.zip", "Projekter/projektdummy1.zip", "Projekter/projektdummy2.zip");
+    $projektPostNames = array("downloadBirger", "downloadDummy1", "downloadDummy2");
+    for($i = 0; $i < count($projektPostNames); $i++)
+    {
+        if(isset($_POST[$projektPostNames[$i]]) && isset($_SESSION["LoggedInBruger"]))
+        {
+            $downloadSet = true;
+            $projektSti = $projektStier[$i];
+        }
+    }    
+    if($downloadSet == true)
+    {
+        include("FunktionKlasser/Download.php");
+        $download = new Download(mysqli_connect("localhost", "root", "", "portfoliodb"));
+        $download->setBrugernavn($_SESSION["LoggedInBruger"]);
+        $download->setProjektSti($projektSti);
+        $download->setProjektStier($projektStier);
+        $download->DownloadFil();
+    }
+}
+function Menu() 
+{
+    if(isset($_POST["loginBtn"]))
+    {
+        if(isset($_SESSION["LoggedInBruger"]))
+        {
+            include("Includes/LoggedInMenu.php");
+        }
+    }
+    else if(isset($_SESSION["LoggedInBruger"]))
+    {
+        include("Includes/LoggedInMenu.php");
+    }
+    else 
+    {
+        include("Includes/menu.php");
+    }    
 }
 function MainHeader() 
 {
@@ -167,11 +207,11 @@ function BottomRightContent()
     if(isset($_SESSION["LoggedInBruger"]))
     {
         echo "Du er logget ind som " . $_SESSION["LoggedInBruger"];
-        include("LoggedInMenu.php");
+        include("Includes/LogudForm.php");
     }
     else 
     {
-        include("LoginForm.php");
+        include("Includes/LoginForm.php");
     }
 }
 function MainHeaderGets() 
@@ -193,22 +233,34 @@ function MainContentGets()
 {
     if(isset($_GET["opret"]))
     {
-        $førValideringVærdier = array("", "", "", "", "", "", "");
+        $førValideringVærdier = array("Brugernavn", "Kodeord", "Fornavn", "Efternavn", "Email", "Hjemmeside", "Profil");
         $efterValideringErrBeskeder = array("", "", "", "", "", "", "");
-        include("OpretBrugerForm.php");
+        include("Includes/OpretBrugerForm.php");
     }
     else if(isset($_GET["om"])) 
     {
-        include("Om.php");
+        include("Includes/Om.php");
     }
     else 
     {
-        include("ForsideContent.php");
+        include("Includes/ForsideContent.php");
     }
 }
 function MainHeaderPosts() 
 {
-    if(isset($_POST["loginBtn"]) && isset($_SESSION["LoggedInBruger"]))
+    if(isset($_POST["opretBrugerBtn"])) 
+    {
+        echo "Opret bruger";
+    }
+    else if(isset($_POST["forside"]))
+    {
+       echo "Forside";
+    }
+    else if(isset($_POST["om"])) 
+    {
+        echo "Om";
+    }
+    else if(isset($_POST["loginBtn"]) && isset($_SESSION["LoggedInBruger"]))
     {
         echo "Projekter";
     }
@@ -224,6 +276,9 @@ function MainHeaderPosts()
     {
         echo "Kontakt";
     }
+    else {
+        echo "Forside";
+    }
 }
 function MainContentPosts()
 {
@@ -235,22 +290,30 @@ function MainContentPosts()
         $efterValideringVærdier = $opretBruger->ReturnerEfterValideringVærdier($førValideringVærdier);
         $efterValideringErrBeskeder = $opretBruger->ReturnerEfterValideringErrBeskeder($førValideringVærdier, $efterValideringVærdier);
         $opretBruger->Opret($efterValideringVærdier);
-        include("OpretBrugerForm.php");
+        include("Includes/OpretBrugerForm.php");
     }
     else if(isset($_POST["loginBtn"]))
     {
         if(isset($_SESSION["LoggedInBruger"]))
         {
-            include("ProjektDownloads.php");
+            include("Includes/ProjektDownloads.php");
         }
         else 
         {
             echo "Du har indtastet forkert information";
         }
     }
+    else if(isset($_POST["forside"]))
+    {
+        include("Includes/ForsideContent.php");
+    }
+    else if(isset($_POST["om"])) 
+    {
+        include("Includes/Om.php");
+    }
     else if(isset($_POST["projekter"]) && isset($_SESSION["LoggedInBruger"]))
     {
-        include("ProjektDownloads.php");
+        include("Includes/ProjektDownloads.php");
     }
     else if(isset($_POST["redigerform"]) && isset($_SESSION["LoggedInBruger"]))
     {
@@ -259,7 +322,7 @@ function MainContentPosts()
         $modtagBruger->setBrugernavn($_SESSION["LoggedInBruger"]);
         $førValideringVærdier = $modtagBruger->ReturnerBrugerData();
         $efterValideringErrBeskeder = array("", "", "", "", "", "");
-        include("RedigerProfilForm.php");
+        include("Includes/RedigerProfilForm.php");
     }
     else if(isset($_POST["redigerBrugerBtn"]) && isset($_SESSION["LoggedInBruger"]))
     {
@@ -270,15 +333,19 @@ function MainContentPosts()
         $efterValideringVærdier = $redigerBruger->ReturnerEfterValideringVærdier($førValideringVærdier);
         $efterValideringErrBeskeder = $redigerBruger->ReturnerEfterValideringErrBeskeder($førValideringVærdier, $efterValideringVærdier);
         $redigerBruger->Opdater($efterValideringVærdier);
-        include("RedigerProfilForm.php");
+        include("Includes/RedigerProfilForm.php");
     }
     else if((isset($_POST["kontaktform"]) && isset($_SESSION["LoggedInBruger"])) || (isset($_POST["kontaktsubmit"]) && isset($_SESSION["LoggedInBruger"])))
     {
-        include("KontaktForm.php");
+        include("Includes/KontaktForm.php");
     }
     else if(isset($_POST["logud"]))
     {
-        include("ForsideContent.php");
+        include("Includes/ForsideContent.php");
+    }
+    else 
+    {
+        include("Includes/ForsideContent.php");
     }
 }
 ?>

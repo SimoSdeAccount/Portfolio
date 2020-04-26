@@ -1,0 +1,57 @@
+<!--<script>
+/*    var kodeordStart = document.getElementsByClassName("redigerFormInputs")[0].value;
+    var fornavnStart = document.getElementsByClassName("redigerFormInputs")[1].value;
+    var efternavnStart = document.getElementsByClassName("redigerFormInputs")[2].value;
+    var emailStart = document.getElementsByClassName("redigerFormInputs")[3].value;
+    var hjemmesideStart = document.getElementsByClassName("redigerFormInputs")[4].value;
+    var profilStart = document.getElementsByClassName("redigerFormInputs")[5].value;
+    var startvals = [kodeordStart, fornavnStart, efternavnStart, emailStart, hjemmesideStart, profilStart]
+function kodeordklik() {
+    valider(0);
+    document.getElementById("kage").innerHTML = kodeordStart; 
+}
+function fornavnklik() {
+    valider(1);
+    document.getElementById("kage").innerHTML = fornavnStart; 
+}
+function efternavnklik() {
+    valider(2);
+    if(document.getElementsByClassName("redigerFormInputs")[2].value === efternavnStart)
+    {
+        document.getElementsByClassName("redigerFormInputs")[2].value = "";
+    }
+    document.getElementById("kage").innerHTML = efternavnStart; 
+}
+function emailklik() {
+    valider(3);
+    document.getElementById("kage").innerHTML = emailStart; 
+}
+function hjemmesideklik() {
+    valider(4);
+    if(document.getElementsByClassName("redigerFormInputs")[4].value === hjemmesideStart)
+    {
+        document.getElementsByClassName("redigerFormInputs")[4].value = "";
+    }
+    document.getElementById("kage").innerHTML = hjemmesideStart; 
+}
+function profilklik() {
+    valider(5);
+    if(document.getElementsByClassName("redigerFormInputs")[5].value === profilStart)
+    {
+        document.getElementsByClassName("redigerFormInputs")[5].value = "";
+    }
+    document.getElementById("kage").innerHTML = profilStart; 
+}
+function valider(index) {
+    for (var i = 0; i < startvals.length; i++) 
+    {
+        if(i !== index)
+        {
+            if(document.getElementsByClassName("redigerFormInputs")[i].value === "")
+            {
+                document.getElementsByClassName("redigerFormInputs")[i].value = startvals[i];
+            }
+        }
+    }
+}*/
+</script>-->

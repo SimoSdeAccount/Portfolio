@@ -59,7 +59,7 @@ class RedigerBruger {
         $bruger->setBrugernavn($this->brugernavn);
         $ProfilId = $bruger->readProfilFromBrugernavn();
         $profil->setId($ProfilId);
-        $profilData = $profil->readDataFromProfilId();
+        $profilData = $this->GenererFørvalideringVærdier($profil->readDataFromProfilId());
         $login->setBrugernavn($this->brugernavn);
         $kodeord = $login->readKodeordFromBrugernavn();
         $brugerData = array($kodeord, $profilData[0], $profilData[1], $profilData[2], $profilData[3], $profilData[4]);
@@ -90,6 +90,18 @@ class RedigerBruger {
             }
         }
         return $efterValideringErrBeskeder;
+    }
+    private function GenererFørvalideringVærdier($profilData = array()) 
+    {
+        $BlankVærdiErstatninger = array("Fornavn", "Efternavn", "Email", "Hjemmeside", "Profil");
+        for($i=0; $i < count($profilData); $i++)
+        {
+            if($profilData[$i] == "")
+            {
+                $profilData[$i] = $BlankVærdiErstatninger[$i];
+            }
+        }
+        return $profilData;
     }
 }
 
