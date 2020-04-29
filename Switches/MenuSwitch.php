@@ -1,0 +1,21 @@
+<?php
+if(isset($_POST["loginBtn"]))
+{
+    if(isset($_SESSION["LoggedInBruger"]))
+    {
+        include("Content/LoggedInMenu.php");
+    }
+    else 
+    {
+        include("Content/StartMenu.php");  
+    }
+}
+else if(isset($_SESSION["LoggedInBruger"]))
+{
+    include("Content/LoggedInMenu.php");
+}
+else 
+{
+    include("Content/StartMenu.php");
+}
+?>

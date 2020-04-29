@@ -16,10 +16,11 @@
       /*  $date = date('Y-m-d H:i:s', time());
         echo $date;*/
         
-            include("FunktionKlasser/RedigerBruger.php");
+           /* include("FunktionKlasser/RedigerBruger.php");
             $redigerBruger = new RedigerBruger(mysqli_connect("localhost", "root", "", "portfoliodb"));
             $redigerBruger->brugernavn = "Karlsmart";
-            $redigerBruger->ModtagBrugerData();
+            $redigerBruger->ModtagBrugerData();*/
         ?>
+        <img src="Grafik/laptop.jpg" />
     </body>
 </html>

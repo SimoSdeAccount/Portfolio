@@ -1,4 +1,6 @@
 <?php
+include("TabelKlasser/downloads.php");
+include("TabelKlasser/bruger.php");
 class Download {
     public function __construct($con) 
     {
@@ -26,7 +28,7 @@ class Download {
         if (file_exists($this->projektsti)) 
         {
             $this->RegistrerDownload();
-         /*   header('Content-Description: File Transfer');
+            header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($this->projektsti).'"');
             header('Expires: 0');
@@ -34,7 +36,7 @@ class Download {
             header('Pragma: public');
             header('Content-Length: ' . filesize($this->projektsti));
             readfile($this->projektsti);
-            exit;*/
+            exit;
         }
         else 
         {
@@ -43,13 +45,11 @@ class Download {
     }
     private function RegistrerDownload() 
     {
-        include("TabelKlasser/downloads.php");
-        include("TabelKlasser/bruger.php");
         $bruger = new bruger($this->connection);
         $bruger->setBrugernavn($this->brugernavn);
         $brugerId = $bruger->readIdFromBrugernavn();
         $projektNavn = $this->FindProjektNavn();
-        $tid = $this->Tid();
+        $tid = date('Y-m-d H:i:s', time());
         $downloadInserter = new Downloads($this->connection);
         $downloadInserter->setBruger($brugerId);
         $downloadInserter->setProjekt($projektNavn);
@@ -67,9 +67,5 @@ class Download {
             }
         }
         return false;
-    }
-    private function Tid()
-    {
-        return date('Y-m-d H:i:s', time());
     }
 }

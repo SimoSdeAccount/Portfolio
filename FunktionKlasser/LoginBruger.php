@@ -1,4 +1,5 @@
 <?php
+include("TabelKlasser/login.php");
 class LoginBruger {
     public function __construct($con, $brugernavn, $kodeord) 
     {
@@ -17,7 +18,6 @@ class LoginBruger {
     private $kodeord;
     function login() 
     {
-        include("TabelKlasser/login.php");
         $login = new login(mysqli_connect("localhost", "root", "", "portfoliodb"));
         $login->setBrugernavn($this->brugernavn);
         $login->setKodeord($this->kodeord);

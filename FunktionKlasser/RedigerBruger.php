@@ -1,6 +1,10 @@
 <?php
+include("Validator.php");
+include("TabelKlasser/login.php");
+include("TabelKlasser/profil.php");
+include("TabelKlasser/bruger.php");
 class RedigerBruger {
-        public function __construct($con) 
+    public function __construct($con) 
     {
         if (!$con) 
         {
@@ -24,10 +28,8 @@ class RedigerBruger {
     public function setBrugernavn($brugernavn){$this->brugernavn = $brugernavn;}
     public function getBrugernavn() {return $this->brugernavn;}
     
-    public function Opdater($efterValideringVærdier) {
-        include("TabelKlasser/bruger.php");
-        include("TabelKlasser/login.php");
-        include("TabelKlasser/profil.php");
+    public function Opdater($efterValideringVærdier) 
+    {
         if($this->validerCounter == count($efterValideringVærdier))
         {
             $bruger = new bruger($this->connection);
@@ -50,9 +52,6 @@ class RedigerBruger {
     }
     public function ReturnerBrugerData() 
     {
-        include("TabelKlasser/login.php");
-        include("TabelKlasser/profil.php");
-        include("TabelKlasser/bruger.php");
         $bruger = new bruger($this->connection);
         $profil = new profil($this->connection);
         $login = new login($this->connection);
@@ -67,7 +66,6 @@ class RedigerBruger {
     }
     public function ReturnerEfterValideringVærdier($førValideringVærdier = array())
     {
-        include("Validator.php");
         $validerOprettetBruger = new Validator();
         $this->kodeord = $validerOprettetBruger->PåkrævetFelt($førValideringVærdier[0]);
         $this->fornavn = $validerOprettetBruger->PåkrævetStandardTekstFormat($førValideringVærdier[1]);
@@ -104,4 +102,3 @@ class RedigerBruger {
         return $profilData;
     }
 }
-

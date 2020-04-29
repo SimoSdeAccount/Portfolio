@@ -1,4 +1,6 @@
 <?php
+include("TabelKlasser/beskeder.php");
+include("TabelKlasser/bruger.php");
 class Kontakt {
     public function __construct($con, $brugernavn, $emne, $besked) 
     {
@@ -20,22 +22,17 @@ class Kontakt {
     private $besked;
     public function IndsaetBesked() 
     {
-        include("TabelKlasser/beskeder.php"); 
         $besked = new beskeder($this->connection);
         $besked->setBruger($this->BrugerId());
         $besked->setEmne($this->emne);
         $besked->setBesked($this->besked);
-        $besked->setTid($this->Tid());
+        $besked->setTid(date('Y-m-d H:i:s', time()));
         $besked->insert();
     }
     private function BrugerId() 
     {
-        include("TabelKlasser/bruger.php");
         $bruger = new bruger($this->connection);
         $bruger->setBrugernavn($this->brugernavn);
         return $bruger->readIdFromBrugernavn();
-    }
-    private function Tid() {
-        return date('Y-m-d H:i:s', time());
     }
 }

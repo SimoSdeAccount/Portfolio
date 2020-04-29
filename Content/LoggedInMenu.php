@@ -1,9 +1,4 @@
-<?php
-if($_SESSION["LoggedInBruger"] == null)
-{
-    header("Location: Nej.php");
-}
-?>
+<?php if($_SESSION["LoggedInBruger"] == null){header("Location: Nej.php");} ?>
 <form method="POST" action="index.php">
     <nav id="navBar" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <ul class="navbar-nav">

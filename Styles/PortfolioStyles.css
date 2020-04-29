@@ -15,7 +15,7 @@
     background-color: #5A6268;
 }
 #LogoContent {
-    background-image: url('PortFolioLogo.png'); /*https://www.youtube.com/watch?v=mvSu0ja6fDs*/
+    background-image: url('../Grafik/PortFolioLogo02.png'); /*https://www.youtube.com/watch?v=mvSu0ja6fDs*/
     background-repeat: no-repeat;
     background-size: auto;
     background-position: bottom;
@@ -34,6 +34,9 @@
     background-color:#d5d9dd;
     padding-top:5px;
     padding-bottom:5px;
+}
+#TopRightContent {
+    text-align:center;
 }
 #MainContainer {
     height:65vh;
@@ -97,4 +100,15 @@
 }
 #loginBtn {
     width:50%;
+}
+#ProjektTable {
+    margin:auto;
+    width:75%;
+    background-color: #c6ced2;
+}
+.ProjektTableHeaders {
+    background-color: #8e9aa4;
+}
+.ProjektTableDataRows:nth-child(even) {
+    background-color: #b8bfc7;
 }

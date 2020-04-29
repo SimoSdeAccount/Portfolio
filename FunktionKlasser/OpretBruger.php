@@ -1,4 +1,8 @@
 <?php
+include("Validator.php");
+include("TabelKlasser/login.php");
+include("TabelKlasser/profil.php");
+include("TabelKlasser/bruger.php");
 class OpretBruger 
 {
     public function __construct($con) 
@@ -21,11 +25,22 @@ class OpretBruger
     private $profil;
     private $validerCounter;
     private $connection;
+    private function EfterValideringBrugernavn($brugernavn) 
+    {
+        $validerBrugernavn = new Validator();
+        if($validerBrugernavn->PåkrævetFelt($brugernavn) === false || $validerBrugernavn->TjekBrugernavn($brugernavn, $this->connection) === false)
+        {
+            return false;
+        }
+        else 
+        {
+            return $brugernavn;
+        }
+    }
     public function ReturnerEfterValideringVærdier($førValideringVærdier = array())
     {
-        include("Validator.php");
         $validerOprettetBruger = new Validator();
-        $this->brugernavn = $validerOprettetBruger->PåkrævetFelt($førValideringVærdier[0]);
+        $this->brugernavn = $this->EfterValideringBrugernavn($førValideringVærdier[0]);
         $this->kodeord = $validerOprettetBruger->PåkrævetFelt($førValideringVærdier[1]);
         $this->fornavn = $validerOprettetBruger->PåkrævetStandardTekstFormat($førValideringVærdier[2]);
         $this->efternavn = $validerOprettetBruger->StandardTekstFormat($førValideringVærdier[3]);
@@ -50,9 +65,6 @@ class OpretBruger
     }
     public function Opret($efterValideringVærdier)
     {
-        include("TabelKlasser/login.php");
-        include("TabelKlasser/profil.php");
-        include("TabelKlasser/bruger.php");
         if($this->validerCounter == count($efterValideringVærdier))
         {
             $insertLogin = new login($this->connection);

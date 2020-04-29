@@ -87,6 +87,17 @@ class Validator
         }
         return $hjemmeside;
     }
+    public function TjekBrugernavn($brugernavn, $con)
+    {
+        $loginTjekBrugernavn = new login($con);
+        $loginTjekBrugernavn->setBrugernavn($brugernavn);
+        $brugertjek = $loginTjekBrugernavn->readBrugernavnFromBrugernavn();
+        if($brugertjek === $brugernavn)
+        {
+            return false;
+        }
+        return $brugernavn;
+    }
     private function test_input($data)
     {
         $data = trim($data);

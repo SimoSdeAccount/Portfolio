@@ -68,6 +68,20 @@ class login
         mysqli_close($this->connection);
         return $loginListe;
     }
+    public function readBrugernavnFromBrugernavn() 
+    {
+        $sql = "SELECT Brugernavn FROM login WHERE Brugernavn = '" . $this->brugernavn . "'";
+        $result = mysqli_query($this->connection, $sql);
+        if (mysqli_num_rows($result) > 0) 
+        {
+            $row = mysqli_fetch_assoc($result);
+            return $row["Brugernavn"];
+        }
+        else 
+        {
+            return false;
+        }    
+    }
     public function readKodeordFromBrugernavn() 
     {
         $sql = "SELECT Kodeord FROM login WHERE Brugernavn = '" . $this->brugernavn . "'";

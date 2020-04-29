@@ -1,31 +1,34 @@
 class FormScript {
-    constructor(inVals, inClass, inSelector) 
+    constructor(inStartVal, inVals, inClass, inSelector) 
     {
+        this.StartVals = inStartVal;
         this.inputvals = inVals;
         this.inputClass = inClass;
         this.selector = inSelector;
         this.ChangePasswordType = true;
     }
+    StartVals;
     inputvals;
     inputClass;
     selector;
     ChangePasswordType;
-    FeltKlik(feltIndex)
+    FeltFokus(feltIndex)
     {
         this.ValiderFelter(feltIndex);
-        if(this.inputvals[feltIndex] === this.selector[feltIndex].value)
+        if(this.inputvals[feltIndex] === this.StartVals[feltIndex])
         {
-            if(this.selector[feltIndex].value === "Kodeord")
+            if(this.selector[feltIndex].name === "kodeord" || this.selector[feltIndex].name === "loginkodeord")
             {
                 this.selector[feltIndex].type = "password";
             }
             this.selector[feltIndex].value = "";
         }
     }
-    PassivFeltKlik(feltIndex)
-    {
-        this.ChangePasswordType = false;
-        this.ValiderFelter(feltIndex);
+    StartKodeordStatus(kodeordIndex) {
+        if(this.selector[kodeordIndex].value !== this.StartVals[kodeordIndex] && this.selector[kodeordIndex].type === "text")
+        {
+            this.selector[kodeordIndex].type = "password";
+        }
     }
     ValiderFelter(feltIndex) 
     {
@@ -35,17 +38,21 @@ class FormScript {
             {
                 if(this.selector[i].value === "")
                 {
-                    if(this.selector[i].type === "password" && this.ChangePasswordType === true)
-                    {
-                        this.selector[i].type = "text";
-                    }
-                    else if(this.selector[i].type === "password" && this.ChangePasswordType === false)
-                    {
-                        this.ChangePasswordType = true;
-                    }
-                    this.selector[i].value = this.inputvals[i];
+                    this.selector[i].value = this.StartVals[i];
                 }
+                
+                if(this.selector[i].value === "Kodeord" && this.selector[i].type === "password")
+                {
+                    this.selector[i].type = "text";
+                }
+                
+
             }
         }
+    }
+    PassivFeltKlik(feltIndex)
+    {
+        this.ChangePasswordType = false;
+        this.ValiderFelter(feltIndex);
     }
 }
